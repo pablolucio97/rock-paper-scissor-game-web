@@ -1,4 +1,4 @@
-## Rock, Paper and Scissor Game Web :game_die:
+### Rock, Paper and Scissor Game Web :game_die:
 
 ### A funny application that simulates the rock paper and scissor game.
 
