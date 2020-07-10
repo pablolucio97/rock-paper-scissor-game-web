@@ -104,11 +104,11 @@ useEffect(() => {
       setDisableButton(true)
       setTime(0)
       if(pcScore > playerScore){
-        setFinalResult('Time finished. PC wins!')
+        setFinalResult('Time finished. PC wins! Refresh the browser to play again.')
       } else if ( pcScore === playerScore){
-        setFinalResult('Time finished. Draw!')
+        setFinalResult('Time finished. Draw! Refresh the browser to play again.')
       } else {
-        setFinalResult('Time finished. Player wins!')
+        setFinalResult('Time finished. Player wins! Refresh the browser to play again.')
       }
     }
     return () => {
