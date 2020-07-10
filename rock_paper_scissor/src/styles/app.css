@@ -1,0 +1,94 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: rgb(126, 135, 218);
+    color: #fff;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.header{
+    display: flex;
+    margin: auto;
+    padding-top: 30px;
+    width: 90%;
+    justify-content: center;
+}
+
+.content{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.play{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 25%;
+    min-width: 25%;
+    margin: auto;
+}
+
+.info{
+    display: flex;
+    flex-direction: row;
+    width: 70%;
+    min-width: 20%;
+    margin: auto;
+    justify-content: space-evenly;
+}
+
+select{
+    height: 35px;
+    border-radius: 3px;
+
+}
+
+.buttonAttack{
+    height: 35px;
+    border-radius: 3px;
+    margin-top: 5%;
+    background-color: rgb(123, 63, 201);
+    color: #fff;
+    border: 1px solid rgb(218, 8, 172);
+}
+
+.buttonDisabled{
+    height: 35px;
+    border-radius: 3px;
+    margin-top: 5%;
+    background-color: rgb(105, 31, 201);
+    color: rgb(211, 13, 13);
+    border: 1px solid rgb(218, 8, 172);
+    opacity: .5;
+}
+
+.delay{
+    display: flex;
+    width: 50%;
+    height: 1px;
+    background-color: rgb(105, 31, 201);
+    margin: auto;
+    justify-content: center;
+    transition: width 1s;
+}
+
+.result{
+    display: flex;
+    justify-content: center;
+}
+
+h4{
+    letter-spacing: 1.5px;
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+h1{
+    font-size: 2.5rem;
+    font-weight: 300;
+}
+p{
+    text-align: center;
+    font-size: 1.5rem;
+}
