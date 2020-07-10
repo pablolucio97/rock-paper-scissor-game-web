@@ -2,7 +2,7 @@
 
 ### A funny application that simulates the rock paper and scissor game.
 
-### This aplications uses:
+### This applications uses:
 React (without external libs).
 
 ### How it's works:
