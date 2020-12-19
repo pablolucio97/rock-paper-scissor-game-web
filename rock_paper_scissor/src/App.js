@@ -1,156 +1,213 @@
-import React, {useState, useEffect} from 'react';
-import './styles/app.css'
+import React, {useState, useEffect} from 'react'
 
-function App() {
-  
-  const [pcScore, setPcScore] = useState(0)
-  const [playerScore, setPlayerScore] = useState(0)
-  const [time, setTime] = useState(15)
-  const [currentPlay, setCurrentPlay] = useState('')
-  const [pcChoice, setPcChoice] = useState([1,2,3])
-  const [pcChoiceString, setPcChoiceString] = useState('')
-  const [playerChoiceString, setPlayerChoiceString] = useState('')
-  const [disableButton, setDisableButton] = useState(false)
-  const [finalResult, setFinalResult] = useState('')
-  const [delayBoxWidth, setDelayBoxWidth] = useState(0)
-  
-  const playing = () => {
-    const randomPcChoice = Math.floor(Math.random()*pcChoice.length * 1)
-    const getSelected = document.getElementById('choice')
-    const selectedIndex = getSelected.selectedIndex
-    switch(randomPcChoice){
-      case(0):
-      if(selectedIndex === 1) {
-        setCurrentPlay('Draw!')  
-        setPlayerChoiceString('Rock.')
-        setPcChoiceString('Rock.')
-      }else if (selectedIndex === 2) {
-        setCurrentPlay('Player wins this round.')
-        setPlayerChoiceString('Paper.')
-        setPcChoiceString('Rock.')
-        setPlayerScore(playerScore + 1)
-      } else if (selectedIndex === 3) {
-        setCurrentPlay('The PC wins this round.')
-        setPlayerChoiceString('Scissor.')
-        setPcChoiceString('Rock')
-        setPcScore(pcScore + 1)
-      } else{
-        setCurrentPlay('Select a weapon before to play.')
-      }
-      break;
-      case(1):
-      if(selectedIndex === 1) {
-        setCurrentPlay('The PC wins this round.')
-        setPlayerChoiceString('Rock')
-        setPcChoiceString('Paper')
-        setPcScore(pcScore + 1)
-      }else if (selectedIndex === 2) {
-        setCurrentPlay('Draw!')
-        setPlayerChoiceString('Paper')
-        setPcChoiceString('Paper')
-      } else if (selectedIndex === 3) {
-        setCurrentPlay('Player wins this round.')
-        setPlayerChoiceString('Scissor')
-        setPcChoiceString('Paper')
-        setPlayerScore(playerScore + 1)
+import './styles/styles.css'
 
-      } else{
-        setCurrentPlay('Select a weapon before to play.')
-      }
-      break;
-      case(2):
-      if(selectedIndex === 1) {
-        setCurrentPlay('Player wins this round.')  
-        setPlayerChoiceString('Rock')
-        setPcChoiceString('Scissor')
-        setPlayerScore(playerScore + 1)
+export default function RockPapperScissor() {
 
-      }else if (selectedIndex === 2) {
-        setCurrentPlay('The PC wins this round.')
-        setPlayerChoiceString('Paper')
-        setPcChoiceString('Scissor')
-      setPcScore(pcScore + 1)
-      } else if (selectedIndex === 3) {
-        setCurrentPlay('Draw!')
-        setPlayerChoiceString('Scissor')
-        setPcChoiceString('Scissor')
-      } else{
-        setCurrentPlay('Select a weapon before to play.')
-      }
-      break;
-      default:
-      }
-      console.log(randomPcChoice)
-  }
+const [playerScore, setPlayerScore] = useState(0)
+const [pcScore, setPCScore] = useState(0)
+const [pcChoice, setPcChoice] = useState(['rock', 'paper', 'scissor'])
+const [msgScore, setMsgScore] = useState('')
+const [finalMsg, setFinalMsg] = useState('')
+const [rock, setRock] = useState(false)
+const [paper, setPaper] = useState(false)
+const [scissor, setScissor] = useState(false)
+const [time, setTime] = useState(60)
+const [waitForPlay, setWaitForPlay] = useState(false)
 
 
 useEffect(() => {
-  window.alert("Welcome to Game Math! Clicking in 'OK' the games starts.")
-}, [])
-  
-  
-  useEffect(() => {
-    //setDelayBoxWidth
-    const getDelayBox = document.getElementById('delay')
-    const timing = setInterval(()=> {setTime(time -1)}, 1000)
-    if(time % 2 == 0){
-      setDelayBoxWidth(10)
-      getDelayBox.style.width = delayBoxWidth + '%'
-    } else {
-      setDelayBoxWidth(50)
-      getDelayBox.style.width = delayBoxWidth + '%'
-    }
-    if(time <= 1){
-      setDisableButton(true)
+  const timer = setTimeout(() => {
+    setTime(time -1)
+    if(time < 1){
+      setWaitForPlay(true)
       setTime(0)
       if(pcScore > playerScore){
-        setFinalResult('Time finished. PC wins! Refresh the browser to play again.')
-      } else if ( pcScore === playerScore){
-        setFinalResult('Time finished. Draw! Refresh the browser to play again.')
-      } else {
-        setFinalResult('Time finished. Player wins! Refresh the browser to play again.')
+        setFinalMsg('The PC Won this battle! Refresh the browser to play again.')
+      }else if(pcScore < playerScore){
+        setFinalMsg('You won this battle! Refresh the browser to play again.')
       }
+      else setFinalMsg('Draw game! Refresh the browser to play again.')
     }
-    return () => {
-      clearInterval(timing)
-    }
+  }, 1000)
+  return () => {
+    clearTimeout(timer)
+  }
 
-  })
+})
 
-  return (
-    <div>
-      <div>
-        <div className='header'>
-          <h1>Rock Paper Scissor Game</h1>
-        </div>
-        <div className="content">
-          <p>Select a weapon to attack</p>
 
-          <div className="play">
-          <select name="choice" id="choice">
-            <option value="0">Select a weapon before to play</option>
-            <option value="2">Rock</option>
-            <option value="3">Paper</option>
-            <option value="4">Scissor</option>
-          </select>
-          <button className={disableButton == false? 'buttonAttack' : 'buttonDisabled'}  onClick={playing} disabled={disableButton}>Attack</button>
-        <p>Player choice: {playerChoiceString}</p>
-        <p>Pc choice: {pcChoiceString}</p>
-        <p style={{color: '#55ff'}}>{currentPlay}</p>
-          <div className="delay" id='delay'></div>
-          </div>
-          <div className="info">
-            <h4>Time: {time}</h4>
-            <h4>Your Score: {playerScore}</h4>
-            <h4>PC Score: {pcScore}</h4>
-          </div>
-        </div>
-        <div className="result" id='result'>
-        <h1>{finalResult}</h1>
-        </div>
-      </div>
-    </div>
-  );
+
+const choiceRock = async () => {
+
+  setTimeout(() => {
+    setWaitForPlay(true)
+  },1)
+
+  setTimeout(() => {
+    setWaitForPlay(false)
+  },1500)
+
+  setTimeout(() => {
+
+    setRock(true)
+    setPaper(false)
+    setScissor(false)
+    
+
+
+
+    const randomPcChoice = Math.floor(Math.random() * pcChoice.length)
+
+    console.log(randomPcChoice)
+    console.log(rock)
+    console.log(paper)
+    console.log(scissor)
+
+    switch(randomPcChoice){
+      case(0):
+      return setMsgScore('You has choiced rock and the PC rock. Game Draw!')
+      break
+      case(1):
+      return [setMsgScore('You has choiced rock and the PC paper. The PC has win this match!'),
+      setPCScore(pcScore + 1)
+    ]
+      break
+      case(2):
+      return setMsgScore[('You has choiced rock and the PC scissor. You win this match!'),
+      setPlayerScore(playerScore + 1)
+    ]
+      break
+      default:
+      }
+  }, 10)
 }
 
-export default App;
+const choicePaper = async () => {
+
+  setTimeout(() => {
+    setWaitForPlay(true)
+  }, 1)
+
+  setTimeout(() => {
+    setWaitForPlay(false)
+  },1500)
+
+  setTimeout(() => {
+
+    setRock(false)
+    setPaper(true)
+    setScissor(false)
+
+    const randomPcChoice = Math.floor(Math.random() * pcChoice.length)
+    console.log(randomPcChoice)
+    console.log(rock)
+    console.log(paper)
+    console.log(scissor)
+
+    switch(randomPcChoice){
+      case(0):
+      return [setMsgScore('You has choiced paper and the PC rock. You win this match!'),
+      setPlayerScore(playerScore + 1)
+    ]
+      break
+      case(1):
+      return setMsgScore('You has choiced paper and the PC paper. Game draw!')
+      break
+      case(2):
+      return [setMsgScore('You has choiced paper and the PC scissor. The PC win this match!'),
+      setPCScore(pcScore + 1)
+    ]
+      break
+      default:
+      }
+  }, 10)
+}
+
+const choiceScissor = async () => {
+
+  setTimeout(() => {
+    setWaitForPlay(true)
+  },1)
+
+  setTimeout(() => {
+    setWaitForPlay(false)
+  },1500)
+
+  setTimeout(() => {
+
+    setRock(false)
+    setPaper(true)
+    setScissor(false)
+
+    const randomPcChoice = Math.floor(Math.random() * pcChoice.length)
+    console.log(randomPcChoice)
+    console.log(rock)
+    console.log(paper)
+    console.log(scissor)
+
+    switch(randomPcChoice){
+      case(0):
+      return [setMsgScore('You has choiced scissor and the PC rock. The PC win this match!'),
+      setPCScore(pcScore + 1)
+    ]
+      break
+      case(1):
+      return [setMsgScore('You has choiced scissor and the PC paper. You win this match!'),
+      setPlayerScore(playerScore + 1)
+    ]
+      break
+      case(2):
+      return setMsgScore('You has choiced scissor and the PC scissor. Game draw!')
+      break
+      default:
+      }
+  }, 10)
+}
+
+  return (
+    <div className="main-container">
+      <div className="title">
+        <h1>Rock Paper Scissor Web Game</h1>
+        <h3>Choice your weapon to fight with the PC</h3>
+      </div>
+      <div className="weapons-container">
+        <div 
+         className="rock"
+         onClick={choiceRock} 
+         style={waitForPlay? {visibility: 'hidden'} :{visibility: 'visible'}}
+        >
+          <span>👊</span>
+          <div className="indicator-time"></div>
+        </div>
+        <div 
+         className="paper"
+         onClick={choicePaper} 
+         style={waitForPlay? {visibility: 'hidden'} :{visibility: 'visible'}}
+        >
+          <span>🖐</span>
+          <div className="indicator-time"></div>
+        </div>
+        <div 
+         className="scissor"
+         onClick={choiceScissor} 
+         style={waitForPlay? {visibility: 'hidden'} :{visibility: 'visible'}}
+        >
+          <span>✌</span>
+          <div className="indicator-time"></div>
+        </div>
+      </div>
+      <div className="scores">
+        <h3>{msgScore}</h3>
+        <div className="points-scores">
+          <p>Your Score: {playerScore}</p>
+          <p>PC Score: {pcScore}</p>
+        </div>
+      </div>
+      <div className="result">
+        <h3>Time: {time}</h3>
+      </div>
+        <p>{finalMsg}</p>
+    </div>
+  )
+}
